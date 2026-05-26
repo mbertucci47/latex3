@@ -44,7 +44,7 @@
 %    }^^A
 % }
 %
-% \date{Released 2026-04-28}
+% \date{Released 2026-05-26}
 %
 % \maketitle
 %
@@ -285,6 +285,16 @@
     \@@_path_mark_corner:
     \@@_softpath_closepath:
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Accessing path information}
+%
+% \begin{macro}[EXP]{\draw_path_lastx:, \draw_path_lasty:}
+%   Wrappers so the underlying data are read-only for users.
+%    \begin{macrocode}
+\cs_new:Npn \draw_path_lastx: { \dim_use:N \g_@@_path_lastx_dim }
+\cs_new:Npn \draw_path_lasty: { \dim_use:N \g_@@_path_lasty_dim }
 %    \end{macrocode}
 % \end{macro}
 %

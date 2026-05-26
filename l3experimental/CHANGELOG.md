@@ -8,7 +8,39 @@ this project uses date-based 'snapshot' version identifiers.
 
 ## [Unreleased]
 
+## [2026-05-26]
+
+### Added
+
+- `\draw_point_interpolate_curve:nnnn`
+- `\draw_path_lastx:`, `\draw_path_lasty:` (issue \#1900)
+
 ### Changed
+
+- Automatically manage layer creation in drawings  (see issue \#1899)
+- Rename `\draw_point_interpolate_arcaxes:nnnnnn` to
+  `draw_point_interpolate_arc_axes:nnnnnn`
+- Document `\draw_point:n` (issue \#1488)
+
+### Fixed
+
+- Correct signature for `\draw_point_interpolate_curve:nnnnnn`
+- Correct result for `\draw_point_interpolate_curve:nnnnnn` (issue \#1903)
+- Correct scaling for `\draw_point_arc_axes:nnnn` (issue \#1910)
+- Correct transformations for `\draw_transform_shift_invert:` (issue \#1913)
+- Correct interpolation in `\draw_point_interpolate_line:nnn` (issue \#1918)
+
+### Removed
+
+- `\draw_layer_new:n` (see issue \#1899)
+
+## [2026-05-15]
+
+### Changed
+
+- Clear the global drawing layer box upon saving (see issue \#1894)
+
+## [2026-04-28]
 
 - Performance tweaks for `l3draw`
 - Standardize argument order for `l3draw` functions taking angle argument(s)
@@ -462,7 +494,10 @@ this project uses date-based 'snapshot' version identifiers.
 - New `l3color` module using `xcolor`-like expression syntax
 - New `l3draw` module, based on `pgf` layer of the TikZ system
 
-[Unreleased]: https://github.com/latex3/latex3/compare/2026-02-18...HEAD
+[Unreleased]: https://github.com/latex3/latex3/compare/2026-05-26...HEAD
+[2026-05-26]: https://github.com/latex3/latex3/compare/2026-05-15...2026-05-26
+[2026-05-15]: https://github.com/latex3/latex3/compare/2026-04-28...2026-05-15
+[2026-04-28]: https://github.com/latex3/latex3/compare/2026-02-18...2026-04-28
 [2026-02-18]: https://github.com/latex3/latex3/compare/2025-10-09...2026-02-18
 [2025-10-09]: https://github.com/latex3/latex3/compare/2025-06-30...2025-10-09
 [2025-06-30]: https://github.com/latex3/latex3/compare/2025-05-26...2025-06-30

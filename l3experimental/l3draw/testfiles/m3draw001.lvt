@@ -89,7 +89,12 @@
 \TESTEXP { \draw_point_interpolate_line:nnn }
   {
     \draw_point_interpolate_line:nnn
-      { 0.5 }
+      { 0.25 }
+      { \draw_point_vec:nn { 0 } { 1 } }
+      { \draw_point_vec:nn { 2 } { 3 } }
+    \NEWLINE
+    \draw_point_interpolate_line:nnn
+      { 0.75 }
       { \draw_point_vec:nn { 0 } { 1 } }
       { \draw_point_vec:nn { 2 } { 3 } }
   }
@@ -107,9 +112,9 @@
       { \draw_point_vec:nn { 0 } { 1 } }
   }
 
-\TESTEXP { \draw_point_interpolate_arcaxes:nnnnnn }
+\TESTEXP { \draw_point_interpolate_arc_axes:nnnnnn }
   {
-    \draw_point_interpolate_arcaxes:nnnnnn
+    \draw_point_interpolate_arc_axes:nnnnnn
       { 0.25 }
       { 1cm , 1cm }
       { 1cm , 0cm }
@@ -118,14 +123,29 @@
       { 40 }
   }
 
-\TESTEXP { \draw_point_interpolate_curve:nnnnnn }
+\TESTEXP { \draw_point_interpolate_curve:nnnn }
   {
-    \draw_point_interpolate_curve:nnnnnn
+    \draw_point_interpolate_curve:nnnn
+      { 0.25 }
+      { ( 0 , 0 ) }
+      { ( 2 , 2 ) }
+      { ( 4 , 0 ) }
+  }
+
+\TESTEXP { \draw_point_interpolate_curve:nnnnn }
+  {
+    \draw_point_interpolate_curve:nnnnn
       { 0.5 }
       { \draw_point_vec:nn { 0 } { 1 } }
       { \draw_point_vec:nn { 1 } { 1 } }
       { \draw_point_vec:nn { 1 } { 1 } }
       { \draw_point_vec:nn { 2 } { 3 } }
+    \draw_point_interpolate_curve:nnnnn
+      { 0.8 }
+      { ( 0 , 0 ) }
+      { ( 1 , 2 ) }
+      { ( 1 , 4 ) }
+      { ( 4 , 3 ) }
   }
 
 \TEST { \draw_set_<axis>vec:n }

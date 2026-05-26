@@ -140,6 +140,16 @@
         \draw_path_moveto:n { 0cm , 0cm }
         \draw_path_lineto:n { 1cm , 1cm }
       }
+    \test:n
+      {
+        \draw_transform_scale:n { 2 }
+        \draw_path_arc_axes:nnnn
+          { \draw_point_vec:nn { 2 } { 0 } }
+          { \draw_point_vec:nn { 0 } { 2 } }
+          { 0 } { 90 }
+        \draw_path_moveto:n { 0cm , 0cm }
+        \draw_path_lineto:n { 1cm , 1cm }
+      }
   }
 
 \TEST { \draw_path_ellipse:nnn }
@@ -290,6 +300,17 @@
           { \draw_point_vec:nn { 1 } { 1 } }
           { \draw_point_vec:nn { 1 } { 2 } }
       }
+  }
+
+\TEST { \draw_path_last<axis>: }
+  {
+    \OMIT
+      \draw_begin:
+        \draw_path_moveto:n { 0pt , 0pt }
+        \draw_path_arc:nnn { 1cm } { 135 } { 90 }
+      \draw_end:
+    \TIMO
+    \TYPE { \draw_path_lastx: , \draw_path_lasty: }
   }
 
 \END

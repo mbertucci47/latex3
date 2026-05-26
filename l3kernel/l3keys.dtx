@@ -43,7 +43,7 @@
 %    }^^A
 % }
 %
-% \date{Released 2026-04-28}
+% \date{Released 2026-05-26}
 %
 % \maketitle
 %
@@ -989,7 +989,8 @@
 %     \cs{keys_if_exist:nnTF} \Arg{module} \Arg{key} \Arg{true code} \Arg{false code}
 %   \end{syntax}
 %   Tests if the \meta{key} exists for \meta{module}, i.e., if any code
-%   has been defined for \meta{key}.
+%   has been defined for \meta{key}. This function does \emph{not} examine
+%   inherited keys: the key only exists if defined explicitly.
 % \end{function}
 %
 % \begin{function}[added = 2011-08-21,EXP,pTF, updated = 2017-11-14]
@@ -2346,11 +2347,11 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_inherit:n}
+% \begin{macro}{\@@_inherit_init:n}
 %  Inheritance means ignoring anything already said about the key:
 %  zap the lot and set up.
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_inherit:n #1
+\cs_new_protected:Npn \@@_inherit_init:n #1
   {
     \@@_undefine:
     \clist_set:Nn \l_@@_inherit_clist {#1}
@@ -2378,11 +2379,7 @@
         \str_clear:N \l_@@_inherit_str
         \@@_execute:nn \l_keys_path_str {#1}
       }
-      {
-        \cs_if_exist:cT
-          { \c_@@_inherit_root_str \@@_parent:o \l_keys_path_str }
-          { \@@_execute_inherit: }
-      }
+      { \@@_inherit:NNn \c_@@_code_root_str \@@_execute:n { } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2802,7 +2799,7 @@
 %   Nothing complex: only one variant at the moment!
 %    \begin{macrocode}
 \cs_new_protected:cpn { \c_@@_props_root_str .inherit:n } #1
-  { \@@_inherit:n {#1} }
+  { \@@_inherit_init:n {#1} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3440,7 +3437,7 @@
             \tl_clear:N \l_keys_value_tl
             \cs_if_exist:cT
               { \c_@@_inherit_root_str \@@_parent:o \l_keys_path_str }
-              { \@@_default_inherit: }
+              { \@@_inherit:NNn \c_@@_default_root_str \@@_default:n { } }
           }
       }
       {
@@ -3452,21 +3449,8 @@
             \l_keys_value_tl {#1}
       }
   }
-\cs_new_protected:Npn \@@_default_inherit:
-  {
-    \clist_map_inline:cn
-      { \c_@@_inherit_root_str \@@_parent:o \l_keys_path_str }
-      {
-        \cs_if_exist:cT
-          { \c_@@_default_root_str ##1 / \l_keys_key_str }
-          {
-            \tl_set_eq:Nc
-              \l_keys_value_tl
-              { \c_@@_default_root_str ##1 / \l_keys_key_str }
-            \clist_map_break:
-          }
-      }
-  }
+\cs_new_protected:Npn \@@_default:n #1
+  { \tl_set_eq:Nc \l_keys_value_tl { \c_@@_default_root_str #1 } }
 \cs_new_eq:NN \@@_value_set:Nn \tl_set:Nn
 \cs_generate_variant:Nn \@@_value_set:Nn { No , NV , Nv , Ne }
 \cs_new_protected:Npn \@@_value_set:NN #1#2 { \tl_set:Nn #1 {#2} }
@@ -3477,8 +3461,9 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\@@_execute:, \@@_execute_inherit:, \@@_execute_unknown:}
-% \begin{macro}{\@@_execute_inherit:n}
+% \begin{macro}{\@@_execute:}
+% \begin{macro}{\@@_execute:n}
+% \begin{macro}{\@@_execute_unknown:}
 % \begin{macro}[EXP]{\@@_execute:nn, \@@_execute:no}
 % \begin{macro}{\@@_store_unused:,\@@_store_unused_aux:}
 %   Actually executing a key is done in two parts. First, look for the
@@ -3490,50 +3475,16 @@
 \cs_new_protected:Npn \@@_execute:
   {
     \cs_if_exist:cTF { \c_@@_code_root_str \l_keys_path_str }
+      { \@@_execute:n { \l_keys_path_str } }
       {
-        \cs_if_exist_use:c { \c_@@_check_root_str \l_keys_path_str }
-        \@@_execute:no \l_keys_path_str \l_keys_value_tl
-      }
-      {
-        \cs_if_exist:cTF
-          { \c_@@_inherit_root_str \@@_parent:o \l_keys_path_str }
-          { \@@_execute_inherit: }
+        \@@_inherit:NNn \c_@@_code_root_str \@@_execute:n
           { \@@_execute_unknown: }
       }
   }
-%    \end{macrocode}
-%   Dealing with inheritance and recursion makes life a little interesting.
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_execute_inherit:
+\cs_new_protected:Npn \@@_execute:n #1
   {
-    \bool_set_false:N \l_@@_inherit_bool
-    \clist_map_inline:cn
-      { \c_@@_inherit_root_str \@@_parent:o \l_keys_path_str }
-      { \@@_execute_inherit:n {##1} }
-    \bool_if:NF \l_@@_inherit_bool
-      { \@@_execute_unknown: }
-  }
-\cs_new_protected:Npn \@@_execute_inherit:n #1
-  {
-    \cs_if_exist:cTF
-      { \c_@@_code_root_str #1 / \l_keys_key_str }
-      {
-        \str_set:Nn \l_@@_inherit_str {#1}
-        \cs_if_exist_use:c { \c_@@_check_root_str #1 / \l_keys_key_str }
-        \@@_execute:no { #1 / \l_keys_key_str } \l_keys_value_tl
-        \clist_map_break:n
-          { \bool_set_true:N \l_@@_inherit_bool }
-      }
-      {
-        \cs_if_exist:cT
-          { \c_@@_inherit_root_str #1 }
-          {
-            \clist_map_inline:cn { \c_@@_inherit_root_str #1 }
-              { \@@_execute_inherit:n {##1} }
-            \bool_if:NT \l_@@_inherit_bool
-              { \clist_map_break: }
-          }
-      }
+    \cs_if_exist_use:c { \c_@@_check_root_str #1 }
+    \@@_execute:no {#1} \l_keys_value_tl
   }
 \cs_new_protected:Npn \@@_execute_unknown:
   {
@@ -3651,6 +3602,49 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\@@_inherit:NNn}
+% \begin{macro}{\@@_inherit:nNN}
+%   Dealing with inheritance and recursion makes life a little interesting.
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_inherit:NNn #1#2#3
+  {
+    \bool_set_false:N \l_@@_inherit_bool
+    \cs_if_exist:cT
+      { \c_@@_inherit_root_str \@@_parent:o \l_keys_path_str }
+      {
+        \clist_map_inline:cn
+          { \c_@@_inherit_root_str \@@_parent:o \l_keys_path_str }
+          { \@@_inherit:nNN {##1} #1 #2 }
+      }
+    \bool_if:NF \l_@@_inherit_bool
+      {#3}
+  }
+\cs_new_protected:Npn \@@_inherit:nNN #1#2#3
+  {
+    \cs_if_exist:cTF
+      { #2 #1 / \l_keys_key_str }
+      {
+        \str_set:Nn \l_@@_inherit_str {#1}
+        #3 { #1 / \l_keys_key_str }
+        \clist_map_break:n
+          { \bool_set_true:N \l_@@_inherit_bool }
+      }
+      {
+        \cs_if_exist:cT
+          { \c_@@_inherit_root_str #1 }
+          {
+            \clist_map_inline:cn { \c_@@_inherit_root_str #1 }
+              { \@@_inherit:nNN {##1} #2 #3 }
+            \bool_if:NT \l_@@_inherit_bool
+              { \clist_map_break: }
+          }
+      }
+  }
+%    \end{macrocode}
 % \end{macro}
 % \end{macro}
 %
