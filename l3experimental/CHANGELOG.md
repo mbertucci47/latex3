@@ -8,6 +8,10 @@ this project uses date-based 'snapshot' version identifiers.
 
 ## [Unreleased]
 
+## Fixed
+
+- Correct point mapping for `\draw_point_vec_polar:nn(n)`
+
 ## [2026-05-26]
 
 ### Added
@@ -19,13 +23,13 @@ this project uses date-based 'snapshot' version identifiers.
 
 - Automatically manage layer creation in drawings  (see issue \#1899)
 - Rename `\draw_point_interpolate_arcaxes:nnnnnn` to
-  `draw_point_interpolate_arc_axes:nnnnnn`
+  `\draw_point_interpolate_arc_axes:nnnnnn`
 - Document `\draw_point:n` (issue \#1488)
 
 ### Fixed
 
-- Correct signature for `\draw_point_interpolate_curve:nnnnnn`
-- Correct result for `\draw_point_interpolate_curve:nnnnnn` (issue \#1903)
+- Correct signature for `\draw_point_interpolate_curve:nnnnnn` to `nnnnn`
+- Correct result for `\draw_point_interpolate_curve:nnnnn` (issue \#1903)
 - Correct scaling for `\draw_point_arc_axes:nnnn` (issue \#1910)
 - Correct transformations for `\draw_transform_shift_invert:` (issue \#1913)
 - Correct interpolation in `\draw_point_interpolate_line:nnn` (issue \#1918)
