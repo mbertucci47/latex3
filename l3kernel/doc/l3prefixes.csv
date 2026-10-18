@@ -171,6 +171,7 @@ langsci,langscibook,Language Science Press,https://langsci-press.org,https://git
 left,l3kernel,The LaTeX Project,https://www.latex-project.org/latex3.html,https://github.com/latex3/latex3.git,https://github.com/latex3/latex3/issues,2018-05-12,2018-05-12,
 legacy,l3kernel,The LaTeX Project,https://www.latex-project.org/latex3.html,https://github.com/latex3/latex3.git,https://github.com/latex3/latex3/issues,2026-01-28,2026-01-28,
 leporello,leporello,Jasper Habicht,https://github.com/jasperhabicht/leporello,https://github.com/jasperhabicht/leporello.git,https://github.com/jasperhabicht/leporello/issues,2025-07-28,2025-07-28,
+lfc,lua-font-config,Clea F. Rees,https://codeberg.org/cfr/nfssext,https://codeberg.org/cfr/nfssext.git,https://codeberg.org/cfr/nfssext/issues,2026-10-18,2026-10-18,Mirrored at https://github.com/cfr42/nfssext
 libris,libris,Clea F. Rees,https://codeberg.org/cfr/nfssext,https://codeberg.org/cfr/nfssext.git,https://codeberg.org/cfr/nfssext/issues,2025-05-12,2025-05-12,Mirrored at https://github.com/cfr42/nfssext
 liftarm,liftarm,Matthias Floré,,,,2024-05-25,2024-05-25,
 lltxmath,lualatex-math,Philipp Stephani,https://github.com/phst/lualatex-math,https://github.com/phst/lualatex-math.git,https://github.com/phst/lualatex-math/issues,2012-11-07,2012-11-07,
@@ -333,6 +334,7 @@ tmpb,l3kernel,The LaTeX Project,https://www.latex-project.org/latex3.html,https:
 token,l3kernel,The LaTeX Project,https://www.latex-project.org/latex3.html,https://github.com/latex3/latex3.git,https://github.com/latex3/latex3/issues,2012-09-27,2012-09-27,
 tpeg,pegmatch,Jianrui Lyu,https://github.com/lvjr/pegmatch,https://github.com/lvjr/pegmatch.git,https://github.com/lvjr/pegmatch/issues,2025-02-16,2025-02-16,
 true,l3kernel,The LaTeX Project,https://www.latex-project.org/latex3.html,https://github.com/latex3/latex3.git,https://github.com/latex3/latex3/issues,2021-04-23,2021-04-23,
+ttl,"latex2e,titlesec",The LaTeX Project,https://www.latex-project.org/latex3.html,https://github.com/latex3/latex2e.git,https://github.com/latex3/latex2e/issues,2026-10-18,2026-10-18,
 tutodoc,tutodoc,Christophe Bal,https://github.com/bc-tools/for-latex/tree/tutodoc/tutodoc,https://github.com/bc-tools/for-latex.git,https://github.com/bc-tools/for-latex/issues,2025-05-06,2025-05-06,
 twmk,menukeys,Tobias Weh,https://github.com/tweh/menukeys,git@github.com:tweh/menukeys.git,https://github.com/tweh/menukeys/issues,2020-10-31,2020-10-31,“classic” L2 package using only some expl3 code
 ufcombo,combofont,Ulrike Fischer,https://github.com/u-fischer/combofont,https://github.com/u-fischer/combofont,https://github.com/u-fischer/combofont/issues,2020-04-24,2020-04-24,
